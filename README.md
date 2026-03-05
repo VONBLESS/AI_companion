@@ -73,3 +73,20 @@ While `main.py` is running, type in the same terminal:
 ## Notes
 - 1-second loop is best effort; slower hardware/model means lower effective rate.
 - For lower latency, reduce `MAX_WIDTH` and `JPEG_QUALITY`.
+
+## Overview
+AI companion that watches your screen and comments in real time
+
+## Tech Stack
+- Python
+
+## Quick Start
+```bash
+pip install -r requirements.txt
+```
+
+## Project Structure
+- `docs/`
+
+## Contributing
+Contributions are welcome. Open an issue or submit a pull request.
