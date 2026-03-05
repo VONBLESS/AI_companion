@@ -1,0 +1,293 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Companion | Live Screen + Voice Assistant</title>
+  <meta name="description" content="AI Companion watches your screen, listens to voice/text input, and responds with live commentary." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f6ef;
+      --panel: #fffdf7;
+      --ink: #111111;
+      --muted: #4a4a4a;
+      --brand: #ff6b35;
+      --brand-2: #127a6b;
+      --line: #d9d5c8;
+      --shadow: 0 14px 34px rgba(17, 17, 17, 0.09);
+      --radius: 18px;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: "Sora", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% -10%, #ffe0cf 0%, transparent 42%),
+        radial-gradient(circle at 100% 10%, #c8f0ea 0%, transparent 38%),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    .hero {
+      border: 2px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      background: linear-gradient(145deg, #fffef9 20%, #fff6ef 100%);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,107,53,0.28) 0%, rgba(255,107,53,0) 70%);
+      right: -110px;
+      top: -130px;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 4.8vw, 3.2rem);
+      line-height: 1.08;
+      max-width: 18ch;
+    }
+
+    .kicker {
+      display: inline-block;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      background: #fff;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      max-width: 64ch;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      color: var(--ink);
+      background: #fff;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+    .btn.primary { background: var(--brand); color: #fff; border-color: #c84a20; }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    h2, h3 { margin-top: 0; }
+
+    ul { margin: 10px 0 0; padding-left: 18px; }
+    li { margin: 6px 0; }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: #151515;
+      color: #f3f3f3;
+      font-family: var(--mono);
+      font-size: .84rem;
+      overflow-x: auto;
+      border: 2px solid #2a2a2a;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: .9em;
+      background: #efece2;
+      border-radius: 6px;
+      padding: 1px 5px;
+    }
+
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      border-radius: 999px;
+      border: 2px solid var(--ink);
+      font-weight: 700;
+      background: #fff;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: .92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .hero { padding: 20px; }
+      .wrap { padding: 16px 12px 44px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="kicker">Open Source AI Companion</div>
+      <h1>Live AI Co-Pilot For Your Screen + Voice</h1>
+      <p class="sub">
+        AI Companion watches your screen, listens to optional voice/chat input, and responds in real time with natural commentary.
+        Built with Python + Ollama, optimized for local use.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/VONBLESS/AI_companion" target="_blank" rel="noreferrer">Try The Repo</a>
+        <a class="btn" href="#quickstart">Quick Start</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card span-4">
+        <h3>What It Does</h3>
+        <ul>
+          <li>Reads your screen at fixed intervals</li>
+          <li>Supports local vision models via Ollama</li>
+          <li>Speaks responses with TTS</li>
+          <li>Accepts live voice input (always-listen or push-to-talk)</li>
+          <li>Accepts terminal chat commands while running</li>
+        </ul>
+      </article>
+
+      <article class="card span-8" id="quickstart">
+        <h3>Quick Start</h3>
+        <ol class="steps">
+          <li>
+            <div>
+              Install dependencies
+              <pre><code>pip install -r requirements.txt</code></pre>
+            </div>
+          </li>
+          <li>
+            <div>
+              Pull model + start Ollama
+              <pre><code>ollama pull qwen2.5vl:3b
+ollama serve</code></pre>
+            </div>
+          </li>
+          <li>
+            <div>
+              Run app
+              <pre><code>python main.py</code></pre>
+            </div>
+          </li>
+        </ol>
+      </article>
+
+      <article class="card span-6">
+        <h3>Live Chat Commands</h3>
+        <ul>
+          <li><code>/say &lt;message&gt;</code></li>
+          <li><code>/tone hype|coach|chill</code></li>
+          <li><code>/silent on|off</code></li>
+          <li><code>/speak &lt;n&gt;</code></li>
+          <li><code>/status</code></li>
+          <li><code>/help</code></li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <h3>GitHub Pages Setup</h3>
+        <ol class="steps">
+          <li><div>Push this project to GitHub</div></li>
+          <li><div>Go to <code>Settings ? Pages</code></div></li>
+          <li><div>Source: <code>Deploy from a branch</code></div></li>
+          <li><div>Branch: <code>main</code>, folder: <code>/docs</code></div></li>
+          <li><div>Save and wait for the live URL</div></li>
+        </ol>
+      </article>
+
+      <article class="card span-12">
+        <h3>Config Snapshot</h3>
+        <pre><code>MODEL_NAME=qwen2.5vl:3b
+FRAME_INTERVAL_SECONDS=1
+VOICE_ENABLED=true
+VOICE_INPUT_ENABLED=true
+ALWAYS_LISTEN=true
+PTT_KEY=f8
+SPEAK_EVERY_N_COMMENTS=1</code></pre>
+      </article>
+    </section>
+
+    <p class="footer">Made by Von • AI Companion • Local-first screen + voice assistant</p>
+  </main>
+</body>
+</html>
+
