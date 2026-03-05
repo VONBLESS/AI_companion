@@ -54,6 +54,62 @@ Add your project license details here.
 
 ## Legacy Notes
 
+# AI companion
+
+AI companion that watches your screen and comments in real time
+
+## Overview
+This repository contains the implementation, configuration, and supporting assets for this project.
+
+## Features
+- Core project functionality (see source files for detailed modules)
+
+## Tech Stack
+- Python
+
+## Project Structure
+- `docs/`
+
+## Quick Start
+```bash
+pip install -r requirements.txt
+python main.py
+```
+
+## Configuration
+Create a `.env` file (or equivalent) and configure keys like:
+
+- `OPENAI_API_KEY`
+- `PROVIDER`
+- `OLLAMA_BASE_URL`
+- `MONITOR_INDEX`
+- `VOICE_ENABLED`
+- `VOICE_GENDER`
+- `VOICE_NAME_HINT`
+- `VOICE_RATE`
+- `VOICE_VOLUME`
+- `HEARTBEAT_SECONDS`
+- `VOICE_BACKEND`
+- `NAME_MENTION_COOLDOWN`
+- `USE_AGENT_NAMES`
+- `SPEAK_ON_EVENTS_ONLY`
+- `KILL_BANNER_CONF_THRESHOLD`
+- `COMPANION_TONE`
+- `KILL_BANNER_HINT_ENABLED`
+- `USE_CONTEXT_MEMORY`
+- `REPETITION_SIMILARITY_THRESHOLD`
+- `FRAME_INTERVAL_SECONDS`
+
+## Contributing
+Contributions are welcome. Please open an issue for major changes before submitting a PR.
+
+## License
+Add your project license details here.
+
+---
+
+## Legacy Notes
+
 # AI Companion (Gameplay Watcher)
 
 This app watches your game screen and generates live commentary with optional voice output.
