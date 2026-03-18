@@ -44,11 +44,6 @@ Create a `.env` file (or equivalent) and configure keys like:
 - `REPETITION_SIMILARITY_THRESHOLD`
 - `FRAME_INTERVAL_SECONDS`
 
-## Contributing
-Contributions are welcome. Please open an issue for major changes before submitting a PR.
-
-## License
-Add your project license details here.
 
 ---
 
